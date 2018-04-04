@@ -91,7 +91,7 @@ func (c *RPCClient) EthCall(to string, from string, param string) (string, error
 	if resp.Error != nil {
 		return "", errors.New(resp.Error.Message)
 	}
-	var heightHex string
-	resp.GetObject(&heightHex)
-	return heightHex, nil
+	var cresp string
+	resp.GetObject(&cresp)
+	return cresp, nil
 }
