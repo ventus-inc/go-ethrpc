@@ -81,8 +81,8 @@ func (c *RPCClient) GetBalance(addr string) (string, error) {
 /*
 EthCall ...
 */
-func (c *RPCClient) EthCall(to string, from string, param string) (string, error) {
-	params := &Contract{to, from, param}
+func (c *RPCClient) Call(from string, to string, data string) (string, error) {
+	params := &Contract{from, to, data}
 	resp, err := c.RPCClient.Call("eth_call", params)
 	if err != nil {
 		return "", err
