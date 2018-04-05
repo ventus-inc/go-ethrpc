@@ -32,3 +32,14 @@ func TestGetBlockNumber(t *testing.T) {
 		So(err, ShouldBeNil)
 	})
 }
+
+func TestCall(t *testing.T) {
+	mockRepo := MockEthClient{}
+	mockRepo.On("Call", "0xfrom", "0xto", "0xdata").Return("0xtrue", nil)
+	mockRepo.On("Call", "0x0", "0x0", "0x0").Return("", "Some error")
+	c := mockRepo
+	Convey("Success", t, func() {
+		_, err := c.Call("0xfrom", "0xto", "0xdata")
+		So(err, ShouldBeNil)
+	})
+}

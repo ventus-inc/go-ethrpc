@@ -9,6 +9,12 @@ import (
 	jsonrpc "github.com/KeisukeYamashita/go-jsonrpc"
 )
 
+type Contract struct {
+	From string `json:"from"`
+	To   string `json:"to"`
+	Data string `json:"data"`
+}
+
 /*
 RPCClient ...
 */
@@ -22,6 +28,8 @@ Interface for other jsonrpc.
 */
 type RPCer interface {
 	GetBlockNumber() (string, error)
+	EthCall(string, string, string) (string, error)
+	Call(from string, to string, param string) (string, error)
 }
 
 /*
@@ -70,4 +78,22 @@ func (c *RPCClient) GetBalance(addr string) (string, error) {
 	var balance string
 	resp.GetObject(&balance)
 	return balance, nil
+}
+
+/*
+EthCall ...
+*/
+func (c *RPCClient) Call(from string, to string, data string) (string, error) {
+	params := &Contract{from, to, data}
+	resp, err := c.RPCClient.Call("eth_call", params)
+	if err != nil {
+		return "", err
+	}
+
+	if resp.Error != nil {
+		return "", errors.New(resp.Error.Message)
+	}
+	var cr string
+	resp.GetObject(&cr)
+	return cr, nil
 }
