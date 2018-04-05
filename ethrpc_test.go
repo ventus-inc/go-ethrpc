@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/joho/godotenv"
+
 	. "github.com/smartystreets/goconvey/convey"
 )
 
@@ -38,7 +39,6 @@ func TestCall(t *testing.T) {
 	mockRepo.On("Call", "0x0", "0x0", "0x0").Return("", "Some error")
 	c := mockRepo
 	Convey("Success", t, func() {
-		//		c := NewRPCClient(os.Getenv("GETH_ENDPOINT"))
 		_, err := c.Call("0xfrom", "0xto", "0xdata")
 		So(err, ShouldBeNil)
 	})
