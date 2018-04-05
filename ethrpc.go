@@ -28,6 +28,8 @@ Interface for other jsonrpc.
 */
 type RPCer interface {
 	GetBlockNumber() (string, error)
+	EthCall(string, string, string) (string, error)
+	Call(from string, to string, param string) (string, error)
 }
 
 /*
@@ -91,7 +93,7 @@ func (c *RPCClient) Call(from string, to string, data string) (string, error) {
 	if resp.Error != nil {
 		return "", errors.New(resp.Error.Message)
 	}
-	var cresp string
-	resp.GetObject(&cresp)
-	return cresp, nil
+	var cr string
+	resp.GetObject(&cr)
+	return cr, nil
 }
